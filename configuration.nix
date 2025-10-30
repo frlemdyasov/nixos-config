@@ -28,7 +28,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ]; # This gets sound to work for Thinkpad T16 Gen 1
+  boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" "i915.force_probe=46a6" ]; # This gets sound to work for Thinkpad T16 Gen 1
 
 #-------------------------------------------------------------------------------------------
 # Networking
@@ -116,6 +116,18 @@
   # sudo nix-collect-garbage  --delete-old
   # sudo /run/current-system/bin/switch-to-configuration boot
 
+  services.xserver.videoDrivers = [ "modesetting" ];
+
+  # Configure Intel Graphics (Xe iGPU)
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver     # VA-API (iHD) userspace
+      vpl-gpu-rt             # oneVPL (QSV) runtime
+      intel-compute-runtime  # OpenCL (NEO) + Level Zero for Arc/Xe
+    ];
+  };
+
   # Install and set default fonts
   fonts = {
     enableDefaultPackages = true;
@@ -148,7 +160,6 @@
   # Enable GPG encyption software
   programs.gnupg.agent = {
     enable = true;
-#    pinentryPackage = [ "pkgs.pinentry-gnome3" ]; # <---- this doesnt work 4/19/25
   };
 
 
@@ -185,7 +196,9 @@
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
 
-  # Allow Steam
+#-------------------------------------------------------------------------------------------
+# Allow Non-Free Programs
+
   nixpkgs.config = {
     allowUnfree = false;  # Disallow non-free packages.
       # Before allowing non-free packages, please read: https://www.gnu.org/philosophy/free-sw.en.html
@@ -287,7 +300,7 @@
     	# Emacs specific additions:
 
     	emacsPackages.haskell-mode		 # haskell mode
-#	#emacsPackages.nix-mode		 	 # nix mode # just doesn't work 3/19/25
+	#emacsPackages.nix-mode		 	 # nix mode # just doesn't work 3/19/25
 	
 	# GNOME specific additions:
 
@@ -303,7 +316,7 @@
 #      description = "Guest User";
 #      password = "guest";
 #      packages = with pkgs; [
-#        firefox 				 # default web browser
+#       firefox 				 # default web browser
 #	libreoffice				 # office suite
 #	vlc					 # media player
 #
