@@ -11,4 +11,3 @@ This setup does not use home-manager or flakes to keep it simple.
 - Right click on the Nautilus file manager doesn't show a terminal option.
   - This can be solved by: Right clicking the empty space -> Open with... -> Select Emacs -> Open -> M-x Term RET RET
 - Can't declaratively install the nix-mode major mode for Emacs.
-- Can't declaratively create another user.
