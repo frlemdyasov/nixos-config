@@ -146,12 +146,8 @@
   # Enable emacs as a service/daemon
   services.emacs = {
     enable = true;
+    defaultEditor = true;
     package = pkgs.emacs-gtk;
-#    package = with pkgs; (
-#      (emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages (
-#        epkgs: [ epkgs.nix-mode ]
-#      )
-#    );
   };
 
   # Enable Guix Package Manager
@@ -250,82 +246,62 @@
       description = "Fedor Lemdyasov";
       extraGroups = [ "networkmanager" "wheel" ];
       packages = with pkgs; [
-      
-	audacity				 # sound editor
+
+	audacity				       # sound editor
 	blackbox-terminal			 # gtk4 terminal
-	borgbackup				 # file backup creator
-	calibre 				 # e-book tools
-	convertall				 # unit converter
-	dita-ot					 # publishing engine
-	eartag					 # audio tag editor
-	emacs-gtk				 # best text editor
-	endless-sky				 # space trading game
-	fastfetch				 # computer stats
-	firefox 				 # main web browser
-	firejail				 # program sandboxer
-	flac					 # audio codec
-	freac					 # audio converter
-	ghc					 # haskell compiler
-	gimp 					 # pixel image editor
-	hieroglyphic				 # latex symbol finder
-	inkscape 				 # vector image editor
-	jdk					 # java runtime
+	borgbackup				     # file backup creator
+	calibre 				       # e-book tools
+	convertall				     # unit converter
+	dita-ot					       # publishing engine
+	eartag					       # audio tag editor
+	emacs-gtk					     # best text editor
+	endless-sky				     # space trading game
+	fastfetch				       # computer stats
+	firefox 				       # main web browser
+	firejail				       # program sandboxer
+	flac					         # audio codec
+	freac					         # audio converter
+	ghc					           # haskell compiler
+	gimp 					         # pixel image editor
+	hieroglyphic				   # latex symbol finder
+	inkscape 				       # vector image editor
+	jdk					           # java runtime
 	# Look into ladybird browser
-	libreoffice				 # office suite
+	libreoffice				     # office suite
 	metadata-cleaner 			 # file metadata eraser
-	mindustry				 # automation td game
-	nicotine-plus				 # p2p music downloader
-	obs-studio 				 # screen recorder
-	octaveFull 				 # programming calculator
-	pass-wayland				 # password manager
-	picard 					 # music metadata
-	poppler_utils				 # pdf utilities
-	qbittorrent 				 # torrent client
-	renameutils				 # file renamer
-	resources				 # task manager
-	shotcut					 # video editing
-	superTuxKart				 # racing game
-	stack					 # haskell toolkit
-	texliveFull				 # typesetting system
-	thunderbird 				 # email client
-	tor-browser 				 # privacy web browser
-	ungoogled-chromium 			 # compatability web browser
-	virt-manager 				 # virtual machines
-	vlc					 # media player
-	whipper					 # cd ripper
-	xonotic					 # fps game
-	yt-dlp					 # yt video downloader
-	zotero					 # citation manager
+	mindustry				       # automation td game
+	nicotine-plus				   # p2p music downloader
+	obs-studio 				     # screen recorder
+	octaveFull 				     # programming calculator
+	pass-wayland				   # password manager
+	picard 					       # music metadata
+	poppler_utils				   # pdf utilities
+	qbittorrent 				   # torrent client
+	renameutils				     # file renamer
+	resources				       # task manager
+	shotcut					       # video editing
+	superTuxKart				   # racing game
+	stack					         # haskell toolkit
+	texliveFull				     # typesetting system
+	thunderbird 				   # email client
+	tor-browser 				   # privacy web browser
+	ungoogled-chromium 		 # compatability web browser
+	virt-manager 				   # virtual machines
+	vlc					           # media player
+	whipper					       # cd ripper
+	xonotic					       # fps game
+	yt-dlp					       # yt video downloader
+	zotero					       # citation manager
 
-    	# Emacs specific additions:
-
-    	emacsPackages.haskell-mode		 # haskell mode
-	#emacsPackages.nix-mode		 	 # nix mode # just doesn't work 3/19/25
-	
 	# GNOME specific additions:
 
-	gnome-mines				 # minesweeper game
-	gnomeExtensions.dash-to-panel 		 # desktop panel
+	gnome-mines				                         # minesweeper game
+	gnomeExtensions.dash-to-panel 		         # desktop panel
 	gnomeExtensions.thinkpad-battery-threshold # battery saver
 	
       ];
     };
-
-#    guest = {		# this user doesn't show up in the GNOME login manager 2/10/25
-#      isNormalUser = true;
-#      description = "Guest User";
-#      password = "guest";
-#      packages = with pkgs; [
-#       firefox 				 # default web browser
-#	libreoffice				 # office suite
-#	vlc					 # media player
-#
-#	# GNOME specific additions
-#	gnome-system-monitor			 # task manager
-#      ];
-#    };
   };
-
 
 #-------------------------------------------------------------------------------------------
 # Enabling Gstreamer Plugins
@@ -344,33 +320,43 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   
-    coreutils-full				 # gnu core utulities
+    coreutils-full		 # gnu core utulities
     git			     			 # git cloner
     wget		     			 # web retriever
 
+    # Emacs Packages
+    
+    ((emacsPackagesFor emacs-gtk).emacsWithPackages (
+      epkgs: [
+      epkgs.haskell-mode
+      #epkgs.nix-mode # Doesn't work, need to install through use-package
+      ]			 
+    ))
+
     # GNOME specific additions:
 
-    adwaita-icon-theme				 # gnome icons
+    adwaita-icon-theme		 # gnome icons
     baobab      	   			 # disk usage analyzer
     cheese      	  			 # photo booth
     eog         	   			 # image viewer
     evince      	   			 # document viewer
     file-roller 	   			 # archive manager
-    glib					 # for gsettings
-    gtk3.out				 	 # for gtk-launch program
-    nautilus					 # file manager
+    glib					         # for gsettings
+    gtk3.out				 	     # for gtk-launch program
+    nautilus					     # file manager
     simple-scan 	   			 # document scanner
-    xdg-user-dirs				 # default directories
-    xdg-user-dirs-gtk 	      	         	 # default directory bookmarks
+    xdg-user-dirs				   # default directories
+    xdg-user-dirs-gtk 	   # default directory bookmarks
 
     #gnome-bluetooth				 # bluetooth
-    gnome-calculator     			 # calculator
-    gnome-control-center			 # gnome settings
-    gnome-disk-utility   			 # disk manager
-    gnome-maps           			 # map navigator
-    gnome-screenshot     			 # screenshot utility
-    gnome-tweaks			 	 # gtk3 settings
+    gnome-calculator     	 # calculator
+    gnome-control-center	 # gnome settings
+    gnome-disk-utility   	 # disk manager
+    gnome-maps           	 # map navigator
+    gnome-screenshot     	 # screenshot utility
+    gnome-tweaks			 	   # gtk3 settings
     gnome-user-docs				 # gnome documentation
+
 
 # Commented out because of non-use 2/22/25
 #    # Create an Filesystem Hierarchy Standard (FHS) environment using the command `fhs`
