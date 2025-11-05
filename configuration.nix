@@ -47,7 +47,8 @@
 # Localization
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  #time.timeZone = "America/New_York";
+  time.timeZone = "America/Denver";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -133,12 +134,16 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       dejavu_fonts
+      overpass
     ];
     fontconfig = {
       defaultFonts = {
         serif = [ "DejaVu Serif" ];
         sansSerif = [ "DejaVu Sans" ];
         monospace = [ "DejaVu Sans Mono" ];
+        #serif = [ "Overpass" ];
+        #sansSerif = [ "Overpass" ];
+        #monospace = [ "Overpass mono" ];
       };
     };
   };
@@ -153,12 +158,60 @@
   # Enable Guix Package Manager
   #services.guix.enable = true;
 
+#-------------------------------------------------------------------------------------------
+# Xmonad Configuration  
+
+  # Enable xmonad
+  services.xserver.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+    config = builtins.readFile /home/fedor/.xmonad/xmonad.hs;
+  };
+
+  # Contents of xmonad.hs
+#  import XMonad
+#
+#  main :: IO ()
+#  main = xmonad $ def
+#      {  terminal    = "emacs"
+#      ,  modMask     = mod4Mask -- rebind Mod to Super Key
+#      ,  normalBorderColor = "white"
+#      ,  focusedBorderColor = "black"
+#      }
+
+#-------------------------------------------------------------------------------------------
+# Program Configuration
+  
   # Enable GPG encyption software
   programs.gnupg.agent = {
     enable = true;
   };
 
+  # Enable and configure foot terminal
+  programs.foot = {
+    enable = true;
+    theme = "paper-color-light";
+    settings = {
+      main = {
+        font = "DejaVu Sans Mono:size=11";
+      };
+      scrollback = {
+        lines = 100000;
+      };
+      csd = {
+        font = "Overpass";
+        size = 36;
+        color = "bcbcbc";
+        button-width = 36;
+        button-minimize-color = "bcbcbc";
+        button-maximize-color = "bcbcbc";
+        button-close-color =  "bcbcbc";
+      };
+    };
+  };
+  
 
+  
 #-------------------------------------------------------------------------------------------
 # GNOME Desktop Configuration
 
@@ -248,7 +301,6 @@
       packages = with pkgs; [
 
 	audacity				       # sound editor
-	blackbox-terminal			 # gtk4 terminal
 	borgbackup				     # file backup creator
 	calibre 				       # e-book tools
 	convertall				     # unit converter
@@ -260,15 +312,16 @@
 	firefox 				       # main web browser
 	firejail				       # program sandboxer
 	flac					         # audio codec
+  foot                   # terminal emulator
 	freac					         # audio converter
 	ghc					           # haskell compiler
 	gimp 					         # pixel image editor
 	hieroglyphic				   # latex symbol finder
 	inkscape 				       # vector image editor
 	jdk					           # java runtime
-	# Look into ladybird browser
 	libreoffice				     # office suite
-	metadata-cleaner 			 # file metadata eraser
+  lsix                   # sixel thumbnails
+	#metadata-cleaner 			 # file metadata eraser # Python test fails
 	mindustry				       # automation td game
 	nicotine-plus				   # p2p music downloader
 	obs-studio 				     # screen recorder
@@ -297,6 +350,7 @@
 
 	gnome-mines				                         # minesweeper game
 	gnomeExtensions.dash-to-panel 		         # desktop panel
+  gnomeExtensions.just-perfection            # tweak tool
 	gnomeExtensions.thinkpad-battery-threshold # battery saver
 	
       ];
@@ -323,15 +377,6 @@
     coreutils-full		 # gnu core utulities
     git			     			 # git cloner
     wget		     			 # web retriever
-
-    # Emacs Packages
-    
-    ((emacsPackagesFor emacs-gtk).emacsWithPackages (
-      epkgs: [
-      epkgs.haskell-mode
-      #epkgs.nix-mode # Doesn't work, need to install through use-package
-      ]			 
-    ))
 
     # GNOME specific additions:
 
