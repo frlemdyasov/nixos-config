@@ -1,7 +1,16 @@
 # Introduction
-This is my NixOS configuration that I'm using on my Lenovo Thinkpad T16 Gen 1.
+This is my NixOS configuration that I'm using on my laptop.
 
 This setup does not use home-manager or flakes to keep it simple.
+
+# The Setup
+- Version: NixOS 25.05
+- Host: Lenovo ThinkPad T16 Gen 1
+- Destop Environment: gnome (primary), xmonad (backup)
+- Browser: firefox (primary), ungoogled-chromium (backup), tor (backup)
+- Terminal: foot
+- Editor: emacs-pgtk
+- Email: Thunderbird
 
 # Non-Declarative Setup Instructions
 - Gnome settings/tweaks need to be manually set.
