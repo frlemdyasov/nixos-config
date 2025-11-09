@@ -33,7 +33,7 @@
 #-------------------------------------------------------------------------------------------
 # Networking
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "metal-pole"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -152,7 +152,7 @@
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = pkgs.emacs-gtk;
+    package = pkgs.emacs-pgtk;
   };
 
   # Enable Guix Package Manager
@@ -173,7 +173,7 @@
 #
 #  main :: IO ()
 #  main = xmonad $ def
-#      {  terminal    = "emacs"
+#      {  terminal    = "gnome-terminal"
 #      ,  modMask     = mod4Mask -- rebind Mod to Super Key
 #      ,  normalBorderColor = "white"
 #      ,  focusedBorderColor = "black"
@@ -190,7 +190,7 @@
   # Enable and configure foot terminal
   programs.foot = {
     enable = true;
-    theme = "paper-color-light";
+    #theme = "paper-color-light";
     settings = {
       main = {
         font = "DejaVu Sans Mono:size=11";
@@ -198,14 +198,36 @@
       scrollback = {
         lines = 100000;
       };
+      colors = {
+        background = "ffffff";
+        foreground = "444444";
+        regular0 = "eeeeee";  # black
+        regular1 = "a60000";  # red
+        regular2 = "006800";  # green
+        regular3 = "6f5500";  # yellow
+        regular4 = "0031a9";  # blue
+        regular5 = "721045";  # magenta
+        regular6 = "005e8b";  # cyan
+        regular7 = "a6a6a6";  # white
+        bright0 = "bcbcbc";   # bright black
+        bright1 = "d00000";   # bright red
+        bright2 = "008900";   # bright green
+        bright3 = "808000";   # bright yellow
+        bright4 = "0000ff";   # bright blue
+        bright5 = "dd22dd";   # bright magenta
+        bright6 = "008899";   # bright cyan
+        bright7 = "ffffff";   # bright white
+      };
       csd = {
-        font = "Overpass";
-        size = 36;
-        color = "bcbcbc";
+        font = "DejaVu Sans";
+        size = 0; # 36
+        color = "c8c8c8";
         button-width = 36;
-        button-minimize-color = "bcbcbc";
-        button-maximize-color = "bcbcbc";
-        button-close-color =  "bcbcbc";
+        button-minimize-color = "deddda";
+        button-maximize-color = "deddda";
+        button-close-color =  "deddda";
+        border-color = "deddda";
+        border-width = 2;
       };
     };
   };
@@ -306,9 +328,10 @@
 	convertall				     # unit converter
 	dita-ot					       # publishing engine
 	eartag					       # audio tag editor
-	emacs-gtk					     # best text editor
+	emacs-pgtk					     # best text editor
 	endless-sky				     # space trading game
 	fastfetch				       # computer stats
+  ffmpegthumbnailer      # video thumbnailer
 	firefox 				       # main web browser
 	firejail				       # program sandboxer
 	flac					         # audio codec
@@ -321,11 +344,13 @@
 	jdk					           # java runtime
 	libreoffice				     # office suite
   lsix                   # sixel thumbnails
+  mediainfo              # video audio tags
 	#metadata-cleaner 			 # file metadata eraser # Python test fails
 	mindustry				       # automation td game
 	nicotine-plus				   # p2p music downloader
 	obs-studio 				     # screen recorder
 	octaveFull 				     # programming calculator
+  p7zip                  # archive tool
 	pass-wayland				   # password manager
 	picard 					       # music metadata
 	poppler_utils				   # pdf utilities
@@ -339,6 +364,7 @@
 	thunderbird 				   # email client
 	tor-browser 				   # privacy web browser
 	ungoogled-chromium 		 # compatability web browser
+  vips                   # image processing system
 	virt-manager 				   # virtual machines
 	vlc					           # media player
 	whipper					       # cd ripper
@@ -348,10 +374,12 @@
 
 	# GNOME specific additions:
 
-	gnome-mines				                         # minesweeper game
-	gnomeExtensions.dash-to-panel 		         # desktop panel
-  gnomeExtensions.just-perfection            # tweak tool
-	gnomeExtensions.thinkpad-battery-threshold # battery saver
+	gnome-mines				                            # minesweeper game
+	#gnomeExtensions.dash-to-panel 		            # desktop panel
+  gnomeExtensions.just-perfection               # tweak tool
+  gnomeExtensions.rounded-window-corners-reborn # rounded windows
+	gnomeExtensions.thinkpad-battery-threshold    # battery saver
+  gnomeExtensions.unite                         # layout tweaks
 	
       ];
     };
