@@ -9,8 +9,8 @@ This setup does not use flakes to keep it simple.
 # The Setup
 - Version: NixOS 25.05
 - Host: Lenovo ThinkPad T16 Gen 1
-- Destop Environment: gnome (primary), xmonad (backup)
-- Browser: firefox (primary), ungoogled-chromium (backup), tor (backup)
+- Destop Environment: gnome 
+- Browser: firefox
 - Terminal: foot
 - Editor: emacs-pgtk
 - Email: Thunderbird
@@ -19,7 +19,6 @@ This setup does not use flakes to keep it simple.
 - Steam needs to be logged into to update and install games.
 - Thunderbird email accounts need to be manually added
 - Emacs needs to be configured by copying .emacs into ~/ .
-- Xmonad needs to be configured by copying xmonad.hs into ~/.xmonad/ .
 - The wallpaper must be set.
 - Firefox extentions need to be installed
 - Firefox settings need to be set
