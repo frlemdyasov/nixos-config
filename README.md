@@ -1,7 +1,10 @@
 # Introduction
 This is my NixOS configuration that I'm using on my laptop.
 
-This setup does not use home-manager or flakes to keep it simple.
+I am using home-manager to declaratively configure gnome.
+
+This setup does not use flakes to keep it simple.
+
 
 # The Setup
 - Version: NixOS 25.05
@@ -13,12 +16,15 @@ This setup does not use home-manager or flakes to keep it simple.
 - Email: Thunderbird
 
 # Non-Declarative Setup Instructions
-- Gnome settings/tweaks need to be manually set.
-- The Gnome extentions must be enabled using the extention manager.
 - Steam needs to be logged into to update and install games.
 - Thunderbird email accounts need to be manually added
 - Emacs needs to be configured by copying .emacs into ~/ .
 - Xmonad needs to be configured by copying xmonad.hs into ~/.xmonad/ .
+- The wallpaper must be set.
+- Firefox extentions need to be installed
+- Firefox settings need to be set
+- Cursor needs to be set (Mocu-White-Right)
+- Icons need to be organized
 
 # Unsolved Issues
 - Right click on the Nautilus file manager doesn't show a terminal option.
