@@ -24,6 +24,7 @@ This setup does not use flakes to keep it simple.
 - Firefox settings need to be set
 - Cursor needs to be set (Mocu-White-Right)
 - Icons need to be organized
+- Window blur from the rounded-corners-reborn extention needs to be set
 
 # Unsolved Issues
 - Right click on the Nautilus file manager doesn't show a terminal option.

@@ -388,10 +388,13 @@ in
           num-workspaces = 2;    
         };
         "org/gnome/desktop/wm/keybindings" = {
-          close = [ "<Superq>" ];
+          close = [ "<Super>q" ];
         };
         "org/gnome/mutter" = {
           dynamic-workspaces = false;
+        };
+        "org/gtk/settings/file-chooser" = {
+          clock-format = "12h";
         };
       };
     };
