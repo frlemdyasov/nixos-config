@@ -230,6 +230,7 @@ in
 	      pass-wayland				   # password manager
 	      picard 					       # music metadata
 	      poppler_utils				   # pdf utilities
+        prismlauncher          # minecraft launcher
 	      qbittorrent 				   # torrent client
 	      renameutils				     # file renamer
 	      resources				       # task manager
@@ -359,10 +360,12 @@ in
            panel-notification-icon = false;
            quick-settings-dark-mode = false;
            quick-settings-night-light = false;
+           search = false;
            support-notifier-type = 0;
            window-picker-icon = false;
            window-preview-close-button = true;
            workspaces-in-app-grid = true;
+           workspace = false;
         };
         "org/gnome/shell/extensions/rounded-window-corners-reborn" = {
           focused-shadow = "{'verticalOffset': 4, 'horizontalOffset': 0, 'blurOffset': 28, 'spreadRadius': 2, 'opacity': 30}";
@@ -382,6 +385,7 @@ in
           document-font-name = "DejaVu Sans 11";
           font-name = "DejaVu Sans 11";
           monospace-font-name = "DejaVu Sans Mono 11";
+          show-battery-percentage = true;
         };
         "org/gnome/desktop/wm/preferences" = {
           button-layout = "appmenu:minimize,maximize,close";
@@ -395,6 +399,10 @@ in
         };
         "org/gtk/settings/file-chooser" = {
           clock-format = "12h";
+        };
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = ["qemu:///system"];
+          uris = ["qemu:///system"];
         };
       };
     };
