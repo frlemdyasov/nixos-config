@@ -103,6 +103,7 @@ in
     };
   };
 
+
   programs.dconf.enable = true; # to remember virt-manager settings
   # A virtualization connection can be made in File->Add Connection
   
@@ -172,6 +173,10 @@ in
       };
     };
   };
+
+  # Enable ability to run unpatched dynamic binaries with nix-shell
+  programs.nix-ld.enable = true;
+
   
     # Enable Steam
   programs.steam = {
@@ -279,6 +284,7 @@ in
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
+
       ];
       
       programs = {
@@ -393,6 +399,12 @@ in
         };
         "org/gnome/desktop/wm/keybindings" = {
           close = [ "<Super>q" ];
+        };
+        "org/gnome/desktop/peripherals/touchpad" = {
+          tap-to-click = false;
+        };
+        "org/gnome/desktop/interface" = {
+          gtk-enable-primary-paste = false;
         };
         "org/gnome/mutter" = {
           dynamic-workspaces = false;

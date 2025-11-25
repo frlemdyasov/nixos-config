@@ -27,9 +27,15 @@
 # Bootloader
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" "i915.force_probe=46a6" ]; # This gets sound to work for Thinkpad T16 Gen 1
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" "i915.force_probe=46a6" ]; # This gets sound to work for Thinkpad T16 Gen 1
+    kernelPackages = pkgs.linuxPackages_latest;
+    extraModprobeConfig =''
+      options snd-hda-intel dmic_detect=0
+    '';
+  };
 
 #-------------------------------------------------------------------------------------------
 # Networking
@@ -82,18 +88,18 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    systemWide = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-  # hardware.enableAllFirmware = true;
-
+  
   # Should fix sluggish touchpad? 5/15/25
   # services.libinput.enable = true;
 
