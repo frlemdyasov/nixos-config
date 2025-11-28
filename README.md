@@ -5,6 +5,7 @@ I am using home-manager to declaratively configure gnome.
 
 This setup does not use flakes to keep it simple.
 
+[Screenshot of my setup](images/desktop.png)
 
 # The Setup
 - Version: NixOS 25.05
@@ -20,9 +21,10 @@ This setup does not use flakes to keep it simple.
 - Thunderbird email accounts need to be manually added
 - Emacs needs to be configured by copying .emacs into ~/ .
 - The wallpaper must be set.
+- The profile picture must be set.
 - Firefox extentions need to be installed
 - Firefox settings need to be set
-- Cursor needs to be set (Mocu-White-Right)
+- Mouse cursor needs to be set (Mocu-White-Right)
 - Application icons need to be organized
 - Window blur from the rounded-corners-reborn extention needs to be set
 
@@ -30,3 +32,7 @@ This setup does not use flakes to keep it simple.
 - Right click on the Nautilus file manager doesn't show a terminal option.
   - This can be solved by: Right clicking the empty space -> Open with... -> Select Emacs -> Open -> M-x Term RET RET
   - Or: Left clicking the three dots -> Copy Location -> Open Terminal -> Type: cd SPC -> C-S-v RET
+
+# Images
+
+Images are licensed under the WTFPL license.

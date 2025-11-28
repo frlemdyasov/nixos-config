@@ -42,6 +42,7 @@ in
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
 
+  
 #-------------------------------------------------------------------------------------------
 # System Services
 
@@ -63,7 +64,7 @@ in
         monospace = [ "DejaVu Sans Mono" ];
         #serif = [ "Overpass" ];
         #sansSerif = [ "Overpass" ];
-        #monospace = [ "Overpass mono" ];
+        #monospace = [ "Overpass Mono" ];
       };
     };
   };
@@ -353,6 +354,11 @@ in
           command = "foot";
           binding = "<Super><Shift>t";
         };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+          name = "Launch LinkedIn";
+          command = "firefox --new-tab https://www.linkedin.com/";
+          binding = "<Control><Shift><Super><Alt>l";
+        };
         "org/gnome/shell/extensions/just-perfection" = {
            activities-button = false;
            clock-menu-position = 2;
@@ -381,7 +387,7 @@ in
           show-notifications = false;
         };
         "org/gnome/desktop/interface" = {
-          accent-color = "teal";
+          accent-color = "yellow";
           enable-animations = true;
           enable-hot-corners = false;
           toolkit-accessibility = false;
@@ -389,6 +395,8 @@ in
           font-name = "DejaVu Sans 11";
           monospace-font-name = "DejaVu Sans Mono 11";
           show-battery-percentage = true;
+          gtk-enable-primary-paste = false;
+          gtk-key-theme = "Emacs";
         };
         "org/gnome/desktop/wm/preferences" = {
           button-layout = "appmenu:minimize,maximize,close";
@@ -399,9 +407,6 @@ in
         };
         "org/gnome/desktop/peripherals/touchpad" = {
           tap-to-click = false;
-        };
-        "org/gnome/desktop/interface" = {
-          gtk-enable-primary-paste = false;
         };
         "org/gnome/mutter" = {
           dynamic-workspaces = false;
