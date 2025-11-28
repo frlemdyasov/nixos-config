@@ -23,7 +23,7 @@ This setup does not use flakes to keep it simple.
 - Firefox extentions need to be installed
 - Firefox settings need to be set
 - Cursor needs to be set (Mocu-White-Right)
-- Icons need to be organized
+- Application icons need to be organized
 - Window blur from the rounded-corners-reborn extention needs to be set
 
 # Unsolved Issues

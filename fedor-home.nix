@@ -103,7 +103,6 @@ in
     };
   };
 
-
   programs.dconf.enable = true; # to remember virt-manager settings
   # A virtualization connection can be made in File->Add Connection
   
@@ -176,7 +175,6 @@ in
 
   # Enable ability to run unpatched dynamic binaries with nix-shell
   programs.nix-ld.enable = true;
-
   
     # Enable Steam
   programs.steam = {
@@ -194,7 +192,7 @@ in
     fedor = {
       isNormalUser = true;
       description = "Fedor Lemdyasov";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "pipewire" ];
       packages = with pkgs; [	];
     };
   };
@@ -284,7 +282,6 @@ in
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
-
       ];
       
       programs = {
