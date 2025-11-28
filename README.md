@@ -5,7 +5,7 @@ I am using home-manager to declaratively configure gnome.
 
 This setup does not use flakes to keep it simple.
 
-[Screenshot of my setup](images/desktop.png)
+![Screenshot of my setup](images/desktop.png)
 
 # The Setup
 - Version: NixOS 25.05
