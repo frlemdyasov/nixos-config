@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz;
+  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz;
 in
 {
   imports =
@@ -13,12 +13,13 @@ in
 # GNOME Desktop Configuration
 
   services.xserver = {
-    enable = true; # Enable X11 windowing system
-    displayManager.gdm.enable = true; # Enable GNOME display manager
-    desktopManager.gnome.enable = true; # Enable GNOME desktop manager
+    enable = false; # Enable X11 windowing system
     xkb.layout = "us"; # Configure keymap in X11
     xkb.variant = "";
   };
+
+  services.desktopManager.gnome.enable = true; # Enable GNOME desktop manager
+  services.displayManager.gdm.enable = true; # Enable GNOME display manager
 
   # Uninstall most default GNOME programs
   services.gnome = {
@@ -41,7 +42,6 @@ in
 
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
-
   
 #-------------------------------------------------------------------------------------------
 # System Services
@@ -233,7 +233,7 @@ in
         p7zip                  # archive tool
 	      pass-wayland				   # password manager
 	      picard 					       # music metadata
-	      poppler_utils				   # pdf utilities
+	      poppler-utils				   # pdf utilities
         prismlauncher          # minecraft launcher
 	      qbittorrent 				   # torrent client
 	      renameutils				     # file renamer

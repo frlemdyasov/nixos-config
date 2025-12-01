@@ -8,7 +8,7 @@ This setup does not use flakes to keep it simple.
 ![Screenshot of my setup](images/desktop.png)
 
 # The Setup
-- Version: NixOS 25.05
+- Version: NixOS 25.11
 - Host: Lenovo ThinkPad T16 Gen 1
 - Destop Environment: gnome 
 - Browser: firefox
