@@ -113,3 +113,29 @@
 
 (use-package bibtex
   :mode (("\\.bib\\'" . bibtex-mode)))
+
+;; Install Dashboard Startup Screen
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+ 
+  (setq dashboard-items '((bookmarks . 5)))
+  (setq dashboard-banner-logo-title "\"Welcome to Emacs\" -Rico")
+  (setq dashboard-startup-banner "/home/fedor/khaled-rico.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-startupify-list '(dashboard-insert-banner
+                                    dashboard-insert-newline
+                                    dashboard-insert-banner-title
+                                    ;;dashboard-insert-newline
+                                    ;;dashboard-insert-navigator
+                                    dashboard-insert-newline
+                                    dashboard-insert-init-info
+                                    dashboard-insert-items
+                                    dashboard-insert-newline))
+)
+
+
+(when window-system
+      (set-frame-position (selected-frame) 10 0)
+      (set-frame-size (selected-frame) 90 53))
