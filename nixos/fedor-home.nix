@@ -269,7 +269,7 @@ in
         xdg-user-dirs-gtk 	   # default directory bookmarks
         
 	      gnome-mines				                            # minesweeper game
-	      #gnomeExtensions.dash-to-panel 		            # desktop panel
+	      gnomeExtensions.dash-to-panel 		            # desktop panel
         gnomeExtensions.just-perfection               # tweak tool
         gnomeExtensions.removable-drive-menu          # drive menu
         gnomeExtensions.rounded-window-corners-reborn # rounded windows
@@ -297,6 +297,7 @@ in
           disable-user-extensions = false;
           disabled-extensions = "disabled";
           enabled-extensions = [
+            "dash-to-panel@jderose9.github.com"
             "just-perfection-desktop@just-perfection"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "rounded-window-corners@fxgn"
@@ -359,14 +360,34 @@ in
           command = "firefox --new-tab https://www.linkedin.com/";
           binding = "<Control><Shift><Super><Alt>l";
         };
+        "org/gnome/shell/extensions/dash-to-panel" = {
+          intellihide = true;
+          intellihide-use-pointer = false;
+          panel-positions = "{\"CMN-0x00000000\":\"TOP\"}";
+          panel-element-positions = "{\"CMN-0x00000000\":[{\"element\":\"showAppsButton\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"activitiesButton\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"leftBox\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"taskbar\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"dateMenu\",\"visible\":true,\"position\":\"centerMonitor\"},{\"element\":\"centerBox\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"rightBox\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"systemMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"desktopButton\",\"visible\":false,\"position\":\"stackedBR\"}]}";
+          show-apps-icon-side-padding = 2;
+          appicon-padding = 0;
+          appicon-margin = 0;
+          highlight-appicon-hover = true;
+          dot-position = "TOP";
+          dot-style-focused = "CILIORA";
+          dot-style-unfocused = "DASHES";
+          trans-use-custom-opacity = true;
+          trans-panel-opacity = 0.0;
+          show-window-previews = false;
+          click-action = "LAUNCH";
+          context-menu-entries = "[]";
+          progress-show-count = false;
+        };
         "org/gnome/shell/extensions/just-perfection" = {
            activities-button = false;
-           clock-menu-position = 2;
-           notification-banner-position = 0;
+           clock-menu-position = 0;
+           notification-banner-position = 1;
            osd = true;
            panel = false;
            panel-in-overview = true;
            panel-notification-icon = false;
+           quick-settings-airplane-mode = false;
            quick-settings-dark-mode = false;
            quick-settings-night-light = false;
            search = false;

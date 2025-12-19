@@ -35,4 +35,6 @@ This setup does not use flakes to keep it simple.
 
 # Images
 
-Images are licensed under the WTFPL license.
+The provided images are licensed under the WTFPL license.
+
+**NOTE:** I use a few images that are copyright, so I can't store them in this repository. 
