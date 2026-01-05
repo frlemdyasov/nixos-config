@@ -89,6 +89,12 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+
+    wireplumber.extraConfig.no-ucm = {
+      "monitor.alsa.properties" = {
+        "alsa.use-ucm" = false;
+      };
+    };
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 

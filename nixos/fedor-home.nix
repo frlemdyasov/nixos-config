@@ -61,10 +61,7 @@ in
       defaultFonts = {
         serif = [ "DejaVu Serif" ];
         sansSerif = [ "DejaVu Sans" ];
-        monospace = [ "DejaVu Sans Mono" ];
-        #serif = [ "Overpass" ];
-        #sansSerif = [ "Overpass" ];
-        #monospace = [ "Overpass Mono" ];
+        monospace = [ "DejaVu Sans Mono" ];;
       };
     };
   };
@@ -235,6 +232,7 @@ in
 	      picard 					       # music metadata
 	      poppler-utils				   # pdf utilities
         prismlauncher          # minecraft launcher
+        public-sans            # nice font
 	      qbittorrent 				   # torrent client
 	      renameutils				     # file renamer
 	      resources				       # task manager
@@ -269,11 +267,12 @@ in
         xdg-user-dirs-gtk 	   # default directory bookmarks
         
 	      gnome-mines				                            # minesweeper game
-	      gnomeExtensions.dash-to-panel 		            # desktop panel
+        gnomeExtensions.appindicator                  # panel indicator
         gnomeExtensions.just-perfection               # tweak tool
         gnomeExtensions.removable-drive-menu          # drive menu
         gnomeExtensions.rounded-window-corners-reborn # rounded windows
 	      gnomeExtensions.thinkpad-battery-threshold    # battery saver
+        gnomeExtensions.window-list                   # window list
         
         #gnome-bluetooth				 # bluetooth
         gnome-calculator     	 # calculator
@@ -295,13 +294,14 @@ in
       dconf.settings = {
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          disabled-extensions = "disabled";
+          disabled-extensions = "window-list@gnome-shell-extensions.gcampax.github.com"; #"disabled";
           enabled-extensions = [
-            "dash-to-panel@jderose9.github.com"
+            "appindicatorsupport@rgcjonas.gmail.com"
             "just-perfection-desktop@just-perfection"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "rounded-window-corners@fxgn"
             "thinkpad-battery-threshold@marcosdalvarez.org"
+            # "window-list@gnome-shell-extensions.gcampax.github.com"
           ];
           favorite-apps = [
             "firefox.desktop"
@@ -360,31 +360,13 @@ in
           command = "firefox --new-tab https://www.linkedin.com/";
           binding = "<Control><Shift><Super><Alt>l";
         };
-        "org/gnome/shell/extensions/dash-to-panel" = {
-          intellihide = true;
-          intellihide-use-pointer = false;
-          panel-positions = "{\"CMN-0x00000000\":\"TOP\"}";
-          panel-element-positions = "{\"CMN-0x00000000\":[{\"element\":\"showAppsButton\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"activitiesButton\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"leftBox\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"taskbar\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"dateMenu\",\"visible\":true,\"position\":\"centerMonitor\"},{\"element\":\"centerBox\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"rightBox\",\"visible\":false,\"position\":\"stackedBR\"},{\"element\":\"systemMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"desktopButton\",\"visible\":false,\"position\":\"stackedBR\"}]}";
-          show-apps-icon-side-padding = 2;
-          appicon-padding = 0;
-          appicon-margin = 0;
-          highlight-appicon-hover = true;
-          dot-position = "TOP";
-          dot-style-focused = "CILIORA";
-          dot-style-unfocused = "DASHES";
-          trans-use-custom-opacity = true;
-          trans-panel-opacity = 0.0;
-          show-window-previews = false;
-          click-action = "LAUNCH";
-          context-menu-entries = "[]";
-          progress-show-count = false;
-        };
         "org/gnome/shell/extensions/just-perfection" = {
-           activities-button = false;
+           activities-button = true;
            clock-menu-position = 0;
            notification-banner-position = 1;
            osd = true;
-           panel = false;
+           top-panel-position = 0;
+           panel = true;
            panel-in-overview = true;
            panel-notification-icon = false;
            quick-settings-airplane-mode = false;
@@ -412,8 +394,8 @@ in
           enable-animations = true;
           enable-hot-corners = false;
           toolkit-accessibility = false;
-          document-font-name = "DejaVu Sans 11";
-          font-name = "DejaVu Sans 11";
+          document-font-name = "Public Sans 11";
+          font-name = "Public Sans 11";
           monospace-font-name = "DejaVu Sans Mono 11";
           show-battery-percentage = true;
           gtk-enable-primary-paste = false;
