@@ -61,7 +61,7 @@ in
       defaultFonts = {
         serif = [ "DejaVu Serif" ];
         sansSerif = [ "DejaVu Sans" ];
-        monospace = [ "DejaVu Sans Mono" ];;
+        monospace = [ "DejaVu Sans Mono" ];
       };
     };
   };
@@ -201,6 +201,7 @@ in
       home.packages = with pkgs; [
 	      audacity				       # sound editor
 	      borgbackup				     # file backup creator
+        bottles                # wine manager
 	      calibre 				       # e-book tools
 	      convertall				     # unit converter
 	      dita-ot					       # publishing engine
@@ -214,8 +215,11 @@ in
 	      flac					         # audio codec
         foot                   # terminal emulator
 	      freac					         # audio converter
-	      ghc					           # haskell compiler
+        gallery-dl             # gallery site downloader
+	      #ghc					           # haskell compiler
 	      gimp 					         # pixel image editor
+        go                     # programming language
+        gopls                  # go lsp server
 	      hieroglyphic				   # latex symbol finder
 	      inkscape 				       # vector image editor
 	      jdk					           # java runtime
@@ -266,7 +270,6 @@ in
         xdg-user-dirs				   # default directories
         xdg-user-dirs-gtk 	   # default directory bookmarks
         
-	      gnome-mines				                            # minesweeper game
         gnomeExtensions.appindicator                  # panel indicator
         gnomeExtensions.just-perfection               # tweak tool
         gnomeExtensions.removable-drive-menu          # drive menu
@@ -276,9 +279,11 @@ in
         
         #gnome-bluetooth				 # bluetooth
         gnome-calculator     	 # calculator
+        gnome-connections      # remote desktop client
         gnome-control-center	 # gnome settings
         gnome-disk-utility   	 # disk manager
         gnome-maps           	 # map navigator
+        gnome-mines				     # minesweeper game
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
