@@ -42,6 +42,27 @@ in
 
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
+
+#-------------------------------------------------------------------------------------------
+# DWL Window Manager Configuration
+
+  #programs.dwl = {
+  #  enable = true;
+  #  extraSessionCommands = "slstatus -s | dwl -s \"swaybg -i /home/fedor/Documents/TaosTrip.png \"";
+  #  package = (pkgs.dwl.override {
+  #    configH = ./dwl/config.h;
+  #  }).overrideAttrs (oldAttrs: {
+  #    buildInputs =
+  #      oldAttrs.buildInputs or []
+  #      ++ [
+  #        pkgs.libdrm
+  #        pkgs.fcft
+  #      ];
+  #    patches = oldAttrs.patches or [] ++ [
+  #      ./dwl/bar-0.7.patch
+  #    ];
+  #  });
+  #};
   
 #-------------------------------------------------------------------------------------------
 # System Services
@@ -140,7 +161,7 @@ in
       colors = {
         background = "ffffff";
         foreground = "444444";
-        regular0 = "eeeeee";  # black
+        regular0 = "000000";  # black
         regular1 = "a60000";  # red
         regular2 = "006800";  # green
         regular3 = "6f5500";  # yellow
@@ -195,6 +216,9 @@ in
     };
   };
 
+#-------------------------------------------------------------------------------------------
+# Installed Programs
+  
   home-manager = {
     useGlobalPkgs = true;
     users.fedor = { pkgs, ... }: {
@@ -287,6 +311,16 @@ in
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
+
+        # DWL specific additions
+
+        #grim                   # image grabber
+        #slstatus               # status monitor
+        #slurp                  # region selector
+        #swaybg                 # wallpaper tool
+        #wl-clipboard           # clipboard utility
+        #wmenu                  # application launcher
+
       ];
       
       programs = {
@@ -296,6 +330,12 @@ in
     # The state version is required and should stay at the version you
     # originally installed.
       home.stateVersion = "24.05";
+
+
+
+#-------------------------------------------------------------------------------------------
+# GNOME configuration
+      
       dconf.settings = {
         "org/gnome/shell" = {
           disable-user-extensions = false;
