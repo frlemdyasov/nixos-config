@@ -42,27 +42,6 @@ in
 
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
-
-#-------------------------------------------------------------------------------------------
-# DWL Window Manager Configuration
-
-  #programs.dwl = {
-  #  enable = true;
-  #  extraSessionCommands = "slstatus -s | dwl -s \"swaybg -i /home/fedor/Documents/TaosTrip.png \"";
-  #  package = (pkgs.dwl.override {
-  #    configH = ./dwl/config.h;
-  #  }).overrideAttrs (oldAttrs: {
-  #    buildInputs =
-  #      oldAttrs.buildInputs or []
-  #      ++ [
-  #        pkgs.libdrm
-  #        pkgs.fcft
-  #      ];
-  #    patches = oldAttrs.patches or [] ++ [
-  #      ./dwl/bar-0.7.patch
-  #    ];
-  #  });
-  #};
   
 #-------------------------------------------------------------------------------------------
 # System Services
@@ -192,6 +171,18 @@ in
     };
   };
 
+  # Thunar file manager configuration
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+  programs.xfconf.enable = true; # Save changes made to Thunar preferences
+  services.tumbler.enable = true; # Thumbnail support for images
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+
   # Enable ability to run unpatched dynamic binaries with nix-shell
   programs.nix-ld.enable = true;
   
@@ -234,13 +225,12 @@ in
 	      endless-sky				     # space trading game
 	      fastfetch				       # computer stats
         ffmpegthumbnailer      # video thumbnailer
+        file-roller            # archive manager
 	      firefox 				       # main web browser
-	      firejail				       # program sandboxer
 	      flac					         # audio codec
         foot                   # terminal emulator
 	      freac					         # audio converter
         gallery-dl             # gallery site downloader
-	      #ghc					           # haskell compiler
 	      gimp 					         # pixel image editor
         go                     # programming language
         gopls                  # go lsp server
@@ -275,6 +265,7 @@ in
 	      virt-manager 				   # virtual machines
 	      vlc					           # media player
 	      whipper					       # cd ripper
+        xfce.thunar            # file manager
 	      xonotic					       # fps game
 	      yt-dlp					       # yt video downloader
 	      zotero					       # citation manager
@@ -312,15 +303,6 @@ in
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
 
-        # DWL specific additions
-
-        #grim                   # image grabber
-        #slstatus               # status monitor
-        #slurp                  # region selector
-        #swaybg                 # wallpaper tool
-        #wl-clipboard           # clipboard utility
-        #wmenu                  # application launcher
-
       ];
       
       programs = {
@@ -355,7 +337,8 @@ in
             "torbrowser.desktop"
             "emacs.desktop"
             "foot.desktop"
-            "org.gnome.Nautilus.desktop"
+            #"org.gnome.Nautilus.desktop"
+            "thunar.desktop"
             "virt-manager.desktop"
           ];
         };
@@ -445,6 +428,7 @@ in
           show-battery-percentage = true;
           gtk-enable-primary-paste = false;
           gtk-key-theme = "Emacs";
+          clock-format = "12h";
         };
         "org/gnome/desktop/wm/preferences" = {
           button-layout = "appmenu:minimize,maximize,close";
