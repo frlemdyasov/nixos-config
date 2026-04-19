@@ -10,14 +10,39 @@ in
     ];
 
 #-------------------------------------------------------------------------------------------
-# GNOME Desktop Configuration
+# Xmonad Desktop Configuration
 
   services.xserver = {
-    enable = false; # Enable X11 windowing system
+    enable = true; # Enable X11 windowing system
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = builtins.readFile /etc/nixos/xmonad/xmonad.hs;
+      extraPackages = hpkgs: [
+          hpkgs.xmonad
+          hpkgs.xmonad-extras
+          hpkgs.xmonad-contrib
+      ];
+    };
+    displayManager.sessionCommands = ''
+      xwallpaper --zoom ~/Pictures/Wallpapers/TaosTrip.png
+    '';
+    libinput = {
+      enable = true;
+      mouse = {
+        accelProfile = "flat";
+      };
+      touchpad = {
+        accelProfile = "flat";
+      };
+    };
     xkb.layout = "us"; # Configure keymap in X11
     xkb.variant = "";
   };
 
+#-------------------------------------------------------------------------------------------
+# GNOME Desktop Configuration
+  
   services.desktopManager.gnome.enable = true; # Enable GNOME desktop manager
   services.displayManager.gdm.enable = true; # Enable GNOME display manager
 
@@ -42,7 +67,7 @@ in
 
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
-  
+
 #-------------------------------------------------------------------------------------------
 # System Services
 
@@ -214,61 +239,67 @@ in
     useGlobalPkgs = true;
     users.fedor = { pkgs, ... }: {
       home.packages = with pkgs; [
-	      audacity				       # sound editor
-	      borgbackup				     # file backup creator
-        bottles                # wine manager
-	      calibre 				       # e-book tools
-	      convertall				     # unit converter
-	      dita-ot					       # publishing engine
-	      eartag					       # audio tag editor
-	      emacs-pgtk					   # best text editor
-	      endless-sky				     # space trading game
-	      fastfetch				       # computer stats
-        ffmpegthumbnailer      # video thumbnailer
-        file-roller            # archive manager
-	      firefox 				       # main web browser
-	      flac					         # audio codec
-        foot                   # terminal emulator
-	      freac					         # audio converter
-        gallery-dl             # gallery site downloader
-	      gimp 					         # pixel image editor
-        go                     # programming language
-        gopls                  # go lsp server
-	      hieroglyphic				   # latex symbol finder
-	      inkscape 				       # vector image editor
-	      jdk					           # java runtime
-	      libreoffice				     # office suite
-        lsix                   # sixel thumbnails
-        mediainfo              # video audio tags
-	      #metadata-cleaner 			 # file metadata eraser # Python test fails
-	      mindustry				       # automation td game
-	      nicotine-plus				   # p2p music downloader
-	      obs-studio 				     # screen recorder
-	      octaveFull 				     # programming calculator
-        p7zip                  # archive tool
-	      pass-wayland				   # password manager
-	      picard 					       # music metadata
-	      poppler-utils				   # pdf utilities
-        prismlauncher          # minecraft launcher
-        public-sans            # nice font
-	      qbittorrent 				   # torrent client
-	      renameutils				     # file renamer
-	      resources				       # task manager
-	      shotcut					       # video editing
-	      superTuxKart				   # racing game
-	      stack					         # haskell toolkit
-	      texliveFull				     # typesetting system
-	      thunderbird 				   # email client
-	      tor-browser 				   # privacy web browser
-	      ungoogled-chromium 		 # compatability web browser
-        vips                   # image processing system
-	      virt-manager 				   # virtual machines
-	      vlc					           # media player
-	      whipper					       # cd ripper
-        xfce.thunar            # file manager
-	      xonotic					       # fps game
-	      yt-dlp					       # yt video downloader
-	      zotero					       # citation manager
+        alsa-utils              # sound utils
+        audacity				        # sound editor
+        borgbackup				      # file backup creator
+        bottles                 # wine manager
+        calibre 				        # e-book tools
+        convertall				      # unit converter
+        dita-ot					        # publishing engine
+        dmenu                   # program launcher
+        eartag					        # audio tag editor
+        emacs					          # best text editor
+        endless-sky				      # space trading game
+        fastfetch				        # computer stats
+        ffmpegthumbnailer       # video thumbnailer
+        file-roller             # archive manager
+        firefox 				        # main web browser
+        flac					          # audio codec
+        foot                    # wayland terminal emulator
+        freac					          # audio converter
+        gallery-dl              # gallery site downloader
+        ghc                     # haskell compiler
+        gimp 					          # pixel image editor
+        go                      # programming language
+        gopls                   # go lsp server
+        haskell-language-server # haskell lsp server
+        hieroglyphic				    # latex symbol finder
+        inkscape 				        # vector image editor
+        jdk					            # java runtime
+        libreoffice				      # office suite
+        lsix                    # sixel thumbnails
+        #metadata-cleaner 		   # file metadata eraser # Python test fails
+        mediainfo               # video audio tags
+        mindustry				        # automation td game
+        nicotine-plus				    # p2p music downloader
+        obs-studio 				      # screen recorder
+        octaveFull 				      # programming calculator
+        p7zip                   # archive tool
+        pass-wayland				    # password manager
+        picard 					        # music metadata
+        poppler-utils				    # pdf utilities
+        prismlauncher           # minecraft launcher
+        public-sans             # nice font
+        qbittorrent 				    # torrent client
+        renameutils				      # file renamer
+        resources				        # task manager
+        shotcut					        # video editing
+        stack					          # haskell toolkit
+        superTuxKart				    # racing game
+        texliveFull				      # typesetting system
+        thunderbird 				    # email client
+        tor-browser 				    # privacy web browser
+        ungoogled-chromium 		  # compatability web browser
+        vips                    # image processing system
+        virt-manager 				    # virtual machines
+        vlc					            # media player
+        whipper					        # cd ripper
+        xfce.thunar             # file manager
+        xmobar                  # status bar
+        xonotic					        # fps game
+        xwallpaper              # x11 wallpaper manager
+        yt-dlp					        # yt video downloader
+        zotero                  # citation manager
         
 	      # GNOME specific additions:
 
@@ -439,6 +470,9 @@ in
         };
         "org/gnome/desktop/peripherals/touchpad" = {
           tap-to-click = false;
+        };
+        "org/gnome/desktop/peripherals/mouse" = {
+          accel-profile = "flat";
         };
         "org/gnome/mutter" = {
           dynamic-workspaces = false;

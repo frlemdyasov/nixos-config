@@ -31,13 +31,18 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" "i915.force_probe=46a6" ]; # This gets sound to work for Thinkpad T16 Gen 1
-    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
+    #extraModprobeConfig = ''
+    #    options snd slots=snd-hda-intel
+    #'';
+    #blacklistedKernelModules = [ "snd_pcsp" ];
   };
 
 #-------------------------------------------------------------------------------------------
 # Networking
 
-  networking.hostName = "metal-pole"; # Define your hostname.
+  networking.hostName = "metalpole"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
