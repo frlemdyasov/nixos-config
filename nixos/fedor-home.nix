@@ -27,19 +27,29 @@ in
     displayManager.sessionCommands = ''
       xwallpaper --zoom ~/Pictures/Wallpapers/TaosTrip.png
     '';
-    libinput = {
-      enable = true;
-      mouse = {
-        accelProfile = "flat";
-      };
-      touchpad = {
-        accelProfile = "flat";
-      };
-    };
     xkb.layout = "us"; # Configure keymap in X11
     xkb.variant = "";
   };
 
+  services.libinput = {
+    enable = true;
+    mouse = {
+      accelProfile = "flat";
+    };
+    touchpad = {
+      accelProfile = "adaptive";
+      naturalScrolling = true;
+      tapping = false;
+    };
+  };
+
+  # Exclude default X11 packages
+  services.xserver.excludePackages = [
+    pkgs.x11_ssh_askpass # password dialog
+    pkgs.xterm 		       # x11 terminal emulator
+  ];
+
+  
 #-------------------------------------------------------------------------------------------
 # GNOME Desktop Configuration
   
@@ -60,11 +70,6 @@ in
     gnome-tour		   # desktop tour
   ]);
 
-  # Exclude default X11 packages
-  services.xserver.excludePackages = [
-    pkgs.xterm 		   # x11 terminal emulator
-  ];
-
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
 
@@ -80,7 +85,6 @@ in
     enableDefaultPackages = true;
     packages = with pkgs; [
       dejavu_fonts
-      overpass
     ];
     fontconfig = {
       defaultFonts = {
@@ -95,7 +99,7 @@ in
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = pkgs.emacs-pgtk;
+    package = pkgs.emacs;
   };
 
   # Enable Guix Package Manager
@@ -239,6 +243,7 @@ in
     useGlobalPkgs = true;
     users.fedor = { pkgs, ... }: {
       home.packages = with pkgs; [
+        alacritty               # x11 terminal emulator
         alsa-utils              # sound utils
         audacity				        # sound editor
         borgbackup				      # file backup creator
@@ -268,6 +273,7 @@ in
         jdk					            # java runtime
         libreoffice				      # office suite
         lsix                    # sixel thumbnails
+        maim                    # screenshot utility
         #metadata-cleaner 		   # file metadata eraser # Python test fails
         mediainfo               # video audio tags
         mindustry				        # automation td game

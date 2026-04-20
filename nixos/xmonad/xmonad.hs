@@ -13,11 +13,11 @@ myLayoutHook = avoidStruts $ layoutHook def
 
 myXmobarPP :: PP
 myXmobarPP = def
-    { ppCurrent = xmobarColor "#008899" ""
-    , ppHidden = xmobarColor "#005e8b" ""
+    { ppCurrent = xmobarColor "#e66100" ""
+    , ppHidden = xmobarColor "#62a0ea" ""
     , ppHiddenNoWindows = xmobarColor "#a6a6a6" ""
-    , ppTitle = xmobarColor "#5f5f5f" "" . shorten 50
-    , ppLayout = xmobarColor "#5f5f5f" "" . shorten 50
+    , ppTitle = xmobarColor "#f6f5f4" "" . shorten 50
+    , ppLayout = xmobarColor "#f6f5f4" "" . shorten 50
     , ppSep = " "
     , ppWsSep = " "
     }
@@ -31,11 +31,14 @@ myManageHook = composeAll
     ]
 
 myKeys =
-  [ ("M-S-t", spawn "gnome-terminal")
+  [ ("M-S-<Return>", spawn "gnome-terminal")
+  , ("M-S-t", spawn "thunderbird")
   , ("M-S-e", spawn "emacs")
   , ("M-S-f", spawn "firefox")
+  , ("M-S-p", spawn "firefox --private-window")
   , ("M-d", spawn "dmenu_run")
   , ("M-q", kill)
+  , ("<Print>", spawn "maim -s ~/Pictures/Screenshots/$(date +%Y%m%d-%H%M%S)-screenshot.png")
   , ("<XF86AudioRaiseVolume>", spawn "amixer -D pipewire sset Master 3%+")
   , ("<XF86AudioLowerVolume>", spawn "amixer -D pipewire sset Master 3%-")
   , ("<XF86AudioMute>", spawn "amixer -D pipewire sset Master 0%")
@@ -48,6 +51,8 @@ myConfig = def
     ,  focusedBorderColor = "#bcbcbc"
     , manageHook = myManageHook
     , layoutHook = myLayoutHook
+    , focusFollowsMouse = False
+    , borderWidth = 0
     }
     `additionalKeysP` myKeys
 

@@ -1,9 +1,9 @@
 Config { overrideRedirect = False
        , font     = "xft:Public Sans-12"
-       , bgColor  = "#5f5f5f"
-       , fgColor  = "#f8f8f2"
+       , bgColor  = "#f6f5f4"
+       , fgColor  = "#241f31"
        , position = Top
-       , commands = [ Run Date "%a %Y-%m-%d <fc=#8be9fd>%I:%M %p</fc>" "date" 10
+       , commands = [ Run Date "%a %Y-%m-%d <fc=#e66100>%I:%M %p</fc>" "date" 10
                     , Run Battery [ "--template" , "Battery: <acstatus>"
                                    , "--Low"      , "10"        -- units: %
                                    , "--High"     , "80"        -- units: %
