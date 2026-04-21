@@ -3,7 +3,7 @@ Config { overrideRedirect = False
        , bgColor  = "#f6f5f4"
        , fgColor  = "#241f31"
        , position = Top
-       , commands = [ Run Date "%a %Y-%m-%d <fc=#e66100>%I:%M %p</fc>" "date" 10
+       , commands = [ Run Date "%b %d <fc=#e66100>%I:%M %p</fc>" "date" 10
                     , Run Battery [ "--template" , "Battery: <acstatus>"
                                    , "--Low"      , "10"        -- units: %
                                    , "--High"     , "80"        -- units: %
@@ -27,8 +27,9 @@ Config { overrideRedirect = False
                         , "--on", ""
                         ]
 		    , Run Wireless "wlp0s20f3" [ "-t", "Network: <essid>" ] 10
+		    , Run Brightness ["-t", "Brightness: <percent>%", "--", "-D", "intel_backlight"] 10
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = " %XMonadLog% } %date% { %wlp0s20f3wi% | %alsa:default:Master% | %battery% "
+       , template = " %XMonadLog% } %date% { %wlp0s20f3wi% | %alsa:default:Master% | %bright% | %battery% "
        }

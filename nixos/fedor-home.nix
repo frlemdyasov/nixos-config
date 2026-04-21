@@ -25,7 +25,7 @@ in
       ];
     };
     displayManager.sessionCommands = ''
-      xwallpaper --zoom ~/Pictures/Wallpapers/TaosTrip.png
+      xwallpaper --zoom ~/Pictures/Wallpapers/TaosTrip.png & xfce4-power-manager &
     '';
     xkb.layout = "us"; # Configure keymap in X11
     xkb.variant = "";
@@ -248,6 +248,7 @@ in
         audacity				        # sound editor
         borgbackup				      # file backup creator
         bottles                 # wine manager
+        brightnessctl           # backlight manager
         calibre 				        # e-book tools
         convertall				      # unit converter
         dita-ot					        # publishing engine
@@ -301,6 +302,7 @@ in
         vlc					            # media player
         whipper					        # cd ripper
         xfce.thunar             # file manager
+        xfce.xfce4-power-manager# power manager
         xmobar                  # status bar
         xonotic					        # fps game
         xwallpaper              # x11 wallpaper manager

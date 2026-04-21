@@ -3,7 +3,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(custom-safe-themes
+   '("95ee4d370f4b66ff2287d8075f8fe5f58c4a9b9c1e65d663b15174f1a8c57717"
+     default))
+ '(package-selected-packages
+   '(auctex dashboard dired-preview dirvish go go-mode haskell-mode
+	    lsp-mode modus-themes nix-mode ultra-scroll)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -119,7 +124,11 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook)
- 
+
+  ;; Replace scratch buffer wth dashboard
+  ;; (to get dashboard working with emacsclient)
+  (setq initial-buffer-choice 'dashboard-open)
+  
   (setq dashboard-items '((bookmarks . 5)))
   (setq dashboard-banner-logo-title "\"Welcome to Emacs\" -Rico")
   (setq dashboard-startup-banner "/home/fedor/khaled-rico.png")
@@ -132,10 +141,36 @@
                                     dashboard-insert-newline
                                     dashboard-insert-init-info
                                     dashboard-insert-items
-                                    dashboard-insert-newline))
-)
+                                    dashboard-insert-newline)))
 
 
+
+;; Set startup window size
 (when window-system
       (set-frame-position (selected-frame) 10 0)
       (set-frame-size (selected-frame) 90 53))
+
+;; Mode Line Theme
+;;(use-package powerline
+;;  :init
+;;  (powerline-default-theme))
+;;
+
+;; Enable LPS-Mode in emacs
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (go-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)

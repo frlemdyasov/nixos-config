@@ -10,10 +10,10 @@ This setup does not use flakes to keep it simple.
 # The Setup
 - Version: NixOS 25.11
 - Host: Lenovo ThinkPad T16 Gen 1
-- Destop Environment: gnome 
+- Destop Environment: gnome, xmonad 
 - Browser: firefox
-- Terminal: foot
-- Editor: emacs-pgtk
+- Terminal: foot, gnome-terminal
+- Editor: emacs
 - Email: Thunderbird
 
 # Non-Declarative Setup Instructions

@@ -33,7 +33,7 @@ myManageHook = composeAll
 myKeys =
   [ ("M-S-<Return>", spawn "gnome-terminal")
   , ("M-S-t", spawn "thunderbird")
-  , ("M-S-e", spawn "emacs")
+  , ("M-S-e", spawn "emacsclient -c")
   , ("M-S-f", spawn "firefox")
   , ("M-S-p", spawn "firefox --private-window")
   , ("M-d", spawn "dmenu_run")
@@ -42,6 +42,8 @@ myKeys =
   , ("<XF86AudioRaiseVolume>", spawn "amixer -D pipewire sset Master 3%+")
   , ("<XF86AudioLowerVolume>", spawn "amixer -D pipewire sset Master 3%-")
   , ("<XF86AudioMute>", spawn "amixer -D pipewire sset Master 0%")
+  , ("<XF86MonBrightnessUp>", spawn "brightnessctl set 5%+ -d intel_backlight")
+  , ("<XF86MonBrightnessDown>", spawn "brightnessctl set 5%- -d intel_backlight")
   ]
 
 myConfig = def
