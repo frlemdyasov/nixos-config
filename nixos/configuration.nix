@@ -31,8 +31,8 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" "i915.force_probe=46a6" ]; # This gets sound to work for Thinkpad T16 Gen 1
-    #kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages;
     #extraModprobeConfig = ''
     #    options snd slots=snd-hda-intel
     #'';
@@ -85,27 +85,40 @@
 #-------------------------------------------------------------------------------------------
 # System Services
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+#  # Enable sound with pipewire.
+#  services.pulseaudio.enable = false;
+#  security.rtkit.enable = true;
+#  services.pipewire = {
+#    enable = true;
+#    systemWide = true;
+#    alsa.enable = true;
+#    alsa.support32Bit = true;
+#    pulse.enable = true;
+#
+#    wireplumber.extraConfig.no-ucm = {
+#      "monitor.alsa.properties" = {
+#        "alsa.use-ucm" = false;
+#      };
+#    };
+#    # If you want to use JACK applications, uncomment this
+#    #jack.enable = true;
+#
+#    # use the example session manager (no others are packaged yet so this is enabled by default,
+#    # no need to redefine it in your config for now)
+#    #media-session.enable = true;
+  #  };
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    systemWide = true;
+    pulse.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
-
     wireplumber.extraConfig.no-ucm = {
       "monitor.alsa.properties" = {
         "alsa.use-ucm" = false;
       };
     };
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Should fix sluggish touchpad? 5/15/25

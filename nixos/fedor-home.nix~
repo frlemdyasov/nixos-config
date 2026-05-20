@@ -100,6 +100,7 @@ in
     enable = true;
     defaultEditor = true;
     package = pkgs.emacs-pgtk;
+    extraConfig = builtins.readFile ./emacs.d/init.el
   };
 
   # Enable Guix Package Manager
@@ -167,7 +168,7 @@ in
         lines = 100000;
       };
       colors = {
-        background = "f2f2f2";
+        background = "ffffff";
         foreground = "444444";
         regular0 = "000000";  # black
         regular1 = "a60000";  # red
@@ -248,7 +249,6 @@ in
         borgbackup				      # file backup creator
         bottles                 # wine manager
         calibre 				        # e-book tools
-        ccls                    # c language server
         convertall				      # unit converter
         dita-ot					        # publishing engine
         eartag					        # audio tag editor
@@ -262,8 +262,6 @@ in
         foot                    # wayland terminal emulator
         freac					          # audio converter
         gallery-dl              # gallery site downloader
-        gcc                     # clang compiler
-        gdb                     # debugger
         ghc                     # haskell compiler
         gimp 					          # pixel image editor
         go                      # programming language
@@ -296,7 +294,6 @@ in
         thunderbird 				    # email client
         tor-browser 				    # privacy web browser
         ungoogled-chromium 		  # compatability web browser
-        unzip                   # extraction utility
         vips                    # image processing system
         virt-manager 				    # virtual machines
         vlc					            # media player
@@ -305,7 +302,6 @@ in
         xonotic					        # fps game
         yt-dlp					        # yt video downloader
         zotero                  # citation manager
-        zip                     # archive tool
         
 	      # GNOME specific additions:
 
@@ -407,7 +403,7 @@ in
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
           name = "Launch Emacs";
-          command = "emacs";
+          command = "emacsclient -c";
           binding = "<Super><Shift>e";
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {

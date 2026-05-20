@@ -6,9 +6,7 @@
  '(custom-safe-themes
    '("95ee4d370f4b66ff2287d8075f8fe5f58c4a9b9c1e65d663b15174f1a8c57717"
      default))
- '(package-selected-packages
-   '(auctex dashboard dired-preview dirvish go go-mode haskell-mode
-	    lsp-mode modus-themes nix-mode ultra-scroll)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -48,10 +46,13 @@
   (setq	modus-themes-italic-constructs t
         modus-themes-bold-constructs nil
 	modus-themes-common-palette-overrides
-      '((border-mode-line-active unspecified)
-        (border-mode-line-inactive unspecified)))
-  (modus-themes-load-theme 'modus-operandi)
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+	'((border-mode-line-active unspecified)
+          (border-mode-line-inactive unspecified)
+	  (bg-main "#f2f2f2")
+	  (bg-dim "#deddda")
+	  (bg-mode-line-active "#c0bfbc")
+	  (bg-mode-line-inactive "#deddda")))
+  (modus-themes-load-theme 'modus-operandi-tinted))
 
 ;; Dirvish file manager, an upgrade to dired
 (use-package dirvish
@@ -127,7 +128,7 @@
 
   ;; Replace scratch buffer wth dashboard
   ;; (to get dashboard working with emacsclient)
-  (setq initial-buffer-choice 'dashboard-open)
+  ;;(setq initial-buffer-choice 'dashboard-open)
   
   (setq dashboard-items '((bookmarks . 5)))
   (setq dashboard-banner-logo-title "\"Welcome to Emacs\" -Rico")
@@ -163,10 +164,13 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (go-mode . lsp)
+	 (c-mode . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 (add-hook 'go-mode-hook #'lsp-deferred)
+
+(use-package lsp-ui)
 
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
@@ -174,3 +178,15 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; syntax checker
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+;; debugger
+(use-package dap-mode)
+
+;; C language server
+(use-package ccls)
