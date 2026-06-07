@@ -1,54 +1,13 @@
 { config, pkgs, lib, ... }:
 
 let
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz;
+  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz;
 in
 {
   imports =
     [
       (import "${home-manager}/nixos")
     ];
-
-  #-------------------------------------------------------------------------------------------
-  # Xmonad Desktop Configuration
-
-  services.xserver = {
-    enable = true; # Enable X11 windowing system
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      config = builtins.readFile /etc/nixos/xmonad/xmonad.hs;
-      extraPackages = hpkgs: [
-        hpkgs.xmonad
-        hpkgs.xmonad-extras
-        hpkgs.xmonad-contrib
-      ];
-    };
-    displayManager.sessionCommands = ''
-      xwallpaper --zoom ~/Pictures/Wallpapers/TaosTrip.png
-    '';
-    xkb.layout = "us"; # Configure keymap in X11
-    xkb.variant = "";
-  };
-
-  services.libinput = {
-    enable = true;
-    mouse = {
-      accelProfile = "flat";
-    };
-    touchpad = {
-      accelProfile = "adaptive";
-      naturalScrolling = true;
-      tapping = false;
-    };
-  };
-
-  # Exclude default X11 packages
-  services.xserver.excludePackages = [
-    pkgs.x11_ssh_askpass # password dialog
-    pkgs.xterm 		       # x11 terminal emulator
-  ];
-
   
 #-------------------------------------------------------------------------------------------
 # GNOME Desktop Configuration
@@ -62,7 +21,7 @@ in
     core-shell.enable = true;
     core-os-services.enable = true; # Essential for GNOME
     gnome-online-accounts.enable = false; # Disable online user accounts
-    core-developer-tools.enable = false;
+    core-developer-tools.enable = true;
   };
 
   # Exclude default GNOME packages
@@ -158,15 +117,15 @@ in
   # Enable and configure foot terminal
   programs.foot = {
     enable = true;
-    #theme = "paper-color-light";
     settings = {
       main = {
         font = "DejaVu Sans Mono:size=11";
+        initial-color-theme = "light";
       };
       scrollback = {
         lines = 100000;
       };
-      colors = {
+      colors-light = {
         background = "f2f2f2";
         foreground = "444444";
         regular0 = "000000";  # black
@@ -203,7 +162,7 @@ in
   # Thunar file manager configuration
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [
+    plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];
@@ -264,11 +223,10 @@ in
         gallery-dl              # gallery site downloader
         gcc                     # clang compiler
         gdb                     # debugger
-        ghc                     # haskell compiler
+        glade                   # gtk gui designer
         gimp 					          # pixel image editor
         go                      # programming language
         gopls                   # go lsp server
-        haskell-language-server # haskell lsp server
         hieroglyphic				    # latex symbol finder
         inkscape 				        # vector image editor
         jdk					            # java runtime
@@ -291,7 +249,8 @@ in
         resources				        # task manager
         shotcut					        # video editing
         stack					          # haskell toolkit
-        superTuxKart				    # racing game
+        supertuxkart				    # racing game
+        thunar                  # file manager
         texliveFull				      # typesetting system
         thunderbird 				    # email client
         tor-browser 				    # privacy web browser
@@ -301,7 +260,6 @@ in
         virt-manager 				    # virtual machines
         vlc					            # media player
         whipper					        # cd ripper
-        xfce.thunar             # file manager
         xonotic					        # fps game
         yt-dlp					        # yt video downloader
         zotero                  # citation manager
@@ -339,15 +297,6 @@ in
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
-
-        # Xmonad specific additions:
-
-        brightnessctl           # backlight manager
-        dmenu                   # program launcher
-        maim                    # screenshot utility
-        xfce.xfce4-power-manager# power manager
-        xmobar                  # status bar
-        xwallpaper              # x11 wallpaper manager
       ];
       
       programs = {
