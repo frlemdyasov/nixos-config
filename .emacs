@@ -36,9 +36,6 @@
 (use-package nix-mode
   :mode "\\.nix\\'")
 
-(use-package haskell-mode
-  :mode "\\.hs\\'")
-
 ;; modus-theme color set
 (use-package modus-themes
   :ensure t
@@ -54,36 +51,6 @@
 	  (bg-mode-line-inactive "#deddda")))
   (modus-themes-load-theme 'modus-operandi-tinted))
 
-;; Dirvish file manager, an upgrade to dired
-(use-package dirvish
-  :init
-  (dirvish-override-dired-mode)
-  :config
-  (setq dired-dwim-target t)
-  (setq delete-by-moving-to-trash t)
-  (setq dired-mouse-drag-files t)
-  (setq mouse-drag-and-drop-region-cross-program t)
-  :bind ; Bind `dirvish-fd|dirvish-side|dirvish-dwim' as you see fit
-  (("C-c f" . dirvish-dwim)
-   :map dirvish-mode-map               ; Dirvish inherits `dired-mode-map'
-   (";"   . dired-up-directory)        ; So you can adjust `dired' bindings here
-   ("?"   . dirvish-dispatch)          ; [?] a helpful cheatsheet
-   ("a"   . dirvish-setup-menu)        ; [a]ttributes settings:`t' toggles mtime, `f' toggles fullframe, etc.
-   ("f"   . dirvish-file-info-menu)    ; [f]ile info
-   ("o"   . dirvish-quick-access)      ; [o]pen `dirvish-quick-access-entries'
-   ("s"   . dirvish-quicksort)         ; [s]ort flie list
-   ("r"   . dirvish-history-jump)      ; [r]ecent visited
-   ("l"   . dirvish-ls-switches-menu)  ; [l]s command flags
-   ("v"   . dirvish-vc-menu)           ; [v]ersion control commands
-   ("*"   . dirvish-mark-menu)
-   ("y"   . dirvish-yank-menu)
-   ("N"   . dirvish-narrow)
-   ("^"   . dirvish-history-last)
-   ("TAB" . dirvish-subtree-toggle)
-   ("M-f" . dirvish-history-go-forward)
-   ("M-b" . dirvish-history-go-backward)
-   ("M-e" . dirvish-emerge-menu)))
-
 (setq backup-by-copying t)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions t)
@@ -92,9 +59,6 @@
 
 ;; Make dired copy/rename files to the other dired window
 (setq dired-dwim-target t)
-
-;; Preview a file from dired
-(use-package dired-preview)
 
 ;; Smooth Scrolling Package
 (use-package ultra-scroll
@@ -147,15 +111,9 @@
 
 
 ;; Set startup window size
-(when window-system
-      (set-frame-position (selected-frame) 10 0)
-      (set-frame-size (selected-frame) 90 53))
-
-;; Mode Line Theme
-;;(use-package powerline
-;;  :init
-;;  (powerline-default-theme))
-;;
+;;(when window-system
+;;      (set-frame-position (selected-frame) 10 0)
+;;      (set-frame-size (selected-frame) 90 53))
 
 ;; Enable LPS-Mode in emacs
 (use-package lsp-mode
@@ -165,12 +123,37 @@
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (go-mode . lsp)
 	 (c-mode . lsp-deferred)
+	 (js-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 (add-hook 'go-mode-hook #'lsp-deferred)
 
 (use-package lsp-ui)
+
+;; JavaScript Mode
+(use-package js2-mode :ensure t :defer 20
+  :mode
+  (("\\.js\\'" . js2-mode))
+  :custom
+  (js2-include-node-externs t)
+  (js2-global-externs '("customElements"))
+  (js2-highlight-level 3)
+  (js2r-prefer-let-over-var t)
+  (js2r-prefered-quote-type 2)
+  (js-indent-align-list-continuation t)
+  (global-auto-highlight-symbol-mode t)
+  :config
+  (setq js-indent-level 2)
+  ;; patch in basic private field support
+  (advice-add #'js2-identifier-start-p
+            :after-until
+            (lambda (c) (eq c ?#))))
+
+;; Drop-down completions
+(use-package corfu
+  :ensure t
+  :hook ((prog-mode . corfu-mode)))
 
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
@@ -186,7 +169,7 @@
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; debugger
-(use-package dap-mode)
+;;(use-package dap-mode)
 
 ;; C language server
 (use-package ccls)
