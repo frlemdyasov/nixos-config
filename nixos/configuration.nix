@@ -75,14 +75,6 @@
   };
 
 #-------------------------------------------------------------------------------------------
-# NixOS Configuration
-
-  nix.settings.experimental-features = [ "nix-command" ];
-  # Experimental features should only be used to give compatability
-  # with imperatively installed programs, or general workarounds.
-  # No core system configuration should be experimental.
-
-#-------------------------------------------------------------------------------------------
 # System Services
 
 #  # Enable sound with pipewire.

@@ -8,6 +8,15 @@ in
     [
       (import "${home-manager}/nixos")
     ];
+
+#-------------------------------------------------------------------------------------------
+# NixOS Configuration
+
+  nix = {
+      package = pkgs.nix;
+      settings.experimental-features = [ "nix-command" "flakes" ];
+    };
+
   
 #-------------------------------------------------------------------------------------------
 # GNOME Desktop Configuration
@@ -21,7 +30,7 @@ in
     core-shell.enable = true;
     core-os-services.enable = true; # Essential for GNOME
     gnome-online-accounts.enable = false; # Disable online user accounts
-    core-developer-tools.enable = true;
+    core-developer-tools.enable = false;
   };
 
   # Exclude default GNOME packages
@@ -239,6 +248,7 @@ in
         obs-studio 				      # screen recorder
         octaveFull 				      # programming calculator
         p7zip                   # archive tool
+        pandoc                  # markup converter
         pass-wayland				    # password manager
         picard 					        # music metadata
         poppler-utils				    # pdf utilities
@@ -254,6 +264,8 @@ in
         texliveFull				      # typesetting system
         thunderbird 				    # email client
         tor-browser 				    # privacy web browser
+        typescript              # javascript builder
+        typescript-language-server # javascript language server
         ungoogled-chromium 		  # compatability web browser
         unzip                   # extraction utility
         vips                    # image processing system
