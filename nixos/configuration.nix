@@ -106,11 +106,11 @@
     pulse.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    wireplumber.extraConfig.no-ucm = {
-      "monitor.alsa.properties" = {
-        "alsa.use-ucm" = false;
-      };
-    };
+    #wireplumber.extraConfig.no-ucm = {
+    #  "monitor.alsa.properties" = {
+    #    "alsa.use-ucm" = false;
+    #  };
+    #};
   };
 
   # Should fix sluggish touchpad? 5/15/25
@@ -133,14 +133,7 @@
   # If \boot runs out of space, delete old linux generations:
   # sudo nix-collect-garbage  --delete-old
   # sudo /run/current-system/bin/switch-to-configuration boot
-
-  services.xserver = {
-    videoDrivers = [ "modesetting" "intel" ];
-    deviceSection = ''
-    Option "TearFree" "true"
-  '';
-  };
-
+  
   # Configure Intel Graphics (Xe iGPU)
   hardware.graphics = {
     enable = true;

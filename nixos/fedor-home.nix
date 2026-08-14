@@ -213,6 +213,7 @@ in
       home.packages = with pkgs; [
         alsa-utils              # sound utils
         audacity				        # sound editor
+        beets                   # music tagger
         borgbackup				      # file backup creator
         bottles                 # wine manager
         calibre 				        # e-book tools

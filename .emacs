@@ -144,11 +144,7 @@
   (js-indent-align-list-continuation t)
   (global-auto-highlight-symbol-mode t)
   :config
-  (setq js-indent-level 2)
-  ;; patch in basic private field support
-  (advice-add #'js2-identifier-start-p
-            :after-until
-            (lambda (c) (eq c ?#))))
+  (setq js-indent-level 2))
 
 ;; Drop-down completions
 (use-package corfu
@@ -173,3 +169,8 @@
 
 ;; C language server
 (use-package ccls)
+
+;; Connect to personal web server
+(defun frlemd ()
+  (interactive)
+  (find-file "/ssh:fedor@frlemd.com|sudo::/etc/nginx/nginx.conf"))
