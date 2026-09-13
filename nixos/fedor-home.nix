@@ -6,7 +6,7 @@ in
 {
   imports =
     [
-      (import "${home-manager}/nixos")
+      "${home-manager}/nixos"
     ];
 
 #-------------------------------------------------------------------------------------------
@@ -41,6 +41,19 @@ in
   # Enable GNOME default terminal
   programs.gnome-terminal.enable = true;
 
+#-------------------------------------------------------------------------------------------
+# Hyprland Desktop Configuration
+
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
+
+  programs.waybar = {
+    enable = true;
+  };
+  
 #-------------------------------------------------------------------------------------------
 # System Services
 
@@ -234,7 +247,7 @@ in
         gcc                     # clang compiler
         gdb                     # debugger
         glade                   # gtk gui designer
-        gimp 					          # pixel image editor
+        gimp 					          # bitmap image editor
         go                      # programming language
         gopls                   # go lsp server
         hieroglyphic				    # latex symbol finder
@@ -259,7 +272,6 @@ in
         renameutils				      # file renamer
         resources				        # task manager
         shotcut					        # video editing
-        stack					          # haskell toolkit
         supertuxkart				    # racing game
         thunar                  # file manager
         texliveFull				      # typesetting system
@@ -269,6 +281,7 @@ in
         typescript-language-server # javascript language server
         ungoogled-chromium 		  # compatability web browser
         unzip                   # extraction utility
+        vanilla-dmz             # cursor theme
         vips                    # image processing system
         virt-manager 				    # virtual machines
         vlc					            # media player
@@ -278,7 +291,7 @@ in
         zotero                  # citation manager
         zip                     # archive tool
         
-	      # GNOME specific additions:
+	      # GNOME Specific Additions:
 
         adwaita-icon-theme		 # gnome icons
         baobab      	   			 # disk usage analyzer
@@ -296,13 +309,12 @@ in
         gnomeExtensions.appindicator                  # panel indicator
         gnomeExtensions.just-perfection               # tweak tool
         gnomeExtensions.removable-drive-menu          # drive menu
-        gnomeExtensions.rounded-window-corners-reborn # rounded windows
-	      gnomeExtensions.thinkpad-battery-threshold    # battery saver
+        #gnomeExtensions.rounded-window-corners-reborn # rounded windows
         gnomeExtensions.window-list                   # window list
         
         #gnome-bluetooth				 # bluetooth
         gnome-calculator     	 # calculator
-        gnome-connections      # remote desktop client
+        #gnome-connections      # remote desktop client
         gnome-control-center	 # gnome settings
         gnome-disk-utility   	 # disk manager
         gnome-maps           	 # map navigator
@@ -310,7 +322,158 @@ in
         gnome-screenshot     	 # screenshot utility
         gnome-tweaks			 	   # gtk3 settings
         gnome-user-docs				 # gnome documentation
+
+        # Hyprland Specific Additions
+
+        brightnessctl           # backlight controller
+        wmenu                   # app launcher
+        hyprshutdown            # shut down utility
+        swaybg                  # wallpaper utility
       ];
+
+       home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ"; 
+
+       # Hyprland configuration
+       wayland.windowManager.hyprland = {
+         enable = true;
+         systemd.enable = false;
+         configType = "lua";
+         #settings = { };
+         #extraConfig = builtins.readFile config/hyprland.lua;
+       };
+
+       # Waybar configuration
+       programs.waybar = {
+         enable = true;
+         style = builtins.readFile ./waybar/style.css;
+         settings = [{
+           layer = "top";
+           position = "top";
+           mod = "dock";
+           exclusive = true;
+           passtrough = false;
+           gtk-layer-shell = true;
+           height = 0;
+           modules-left = [
+             "hyprland/workspaces"
+             "custom/divider"
+             "cpu"
+             "memory"
+           ];
+           modules-center = [ "clock" ];
+           modules-right = [
+             #"pulseaudio/slider"
+             "tray"
+             "custom/divider"
+             "network"
+             "custom/divider"
+             "backlight"
+             "custom/divider"
+             "pulseaudio"
+             "custom/divider"
+             "battery"
+             "custom/divider"
+             "custom/power"
+           ];
+           "hyprland/workspaces" = {
+             #on-scroll-up = "hyprctl dispatch workspace e+1";
+             #on-scroll-down = "hyprctl dispatch workspace e-1";
+             on-scroll-up = "hyprctl dispatch 'hl.dsp.exec_raw(\"workspace e+1\")'";
+             on-scroll-down = "hyprctl dispatch 'hl.dsp.exec_raw(\"workspace e-11\")'";
+             all-outputs = true;
+             on-click = "activate";
+           };
+           battery = {
+             format = "Bat: {capacity}%";
+             tooltip-format = "Time: {time}";
+           };
+           cpu = {
+             interval = 10;
+             format = "CPU: {}%";
+             max-length = 10;
+             on-click = "";
+           };
+           memory = {
+             interval = 30;
+             format = " Mem: {}%";
+             format-alt = "Mem: {used:0.1f}G";
+             max-length = 10;
+           };
+           backlight = {
+             format = "Bkl: {}";
+             device = "acpi_video0";
+           };
+           tray = {
+             icon-size = 13;
+             tooltip = true;
+             spacing = 10;
+           };
+           network = {
+             format = "Net: {essid}";
+             format-disconnected = "Net: disconnected";
+             tooltip-format = ''
+               Device: {ifname}
+               Signal Strength: {signalStrength}
+               Upload Speed: {bandwidthUpBytes}
+               Download Speed: {bandwidthDownBytes} '';
+           };
+           clock = {
+             format = "{:%I:%M %p  %m/%d/%Y} ";
+             tooltip-format = "<span font='DejaVu Sans Mono'>{calendar}</span>";
+             calendar = {
+               format = {
+                 today = "<span><b>{}</b></span>";
+               };
+             };
+           };
+           pulseaudio = {
+             format = "Vol: {volume}%";
+             tooltip = true;
+             format-muted = "Muted";
+             on-click = "pamixer -t";
+             on-scroll-up = "pamixer -i 5";
+             on-scroll-down = "pamixer -d 5";
+             scroll-step = 5;
+           };
+           "pulseaudio/slider" = {
+             min = 0;
+             max = 100;
+             orientation = "horizontal";
+           };
+           "pulseaudio#microphone" = {
+             format = "{format_source}";
+             tooltip = false;
+             format-source = "Mic: {volume}%";
+             format-source-muted = " Muted";
+             on-click = "pamixer --default-source -t";
+             on-scroll-up = "pamixer --default-source -i 5";
+             on-scroll-down = "pamixer --default-source -d 5";
+             scroll-step = 5;
+           };
+           "custom/divider" = {
+             format = " | ";
+             interval = "once";
+             tooltip = false;
+           };
+           "custom/endright" = {
+             format = "_";
+             interval = "once";
+             tooltip = false;
+           };
+           "custom/power" = {
+	           format = "⏻ ";
+	           tooltip = false;
+	           menu =  "on-click";
+	           menu-file = "/etc/nixos/waybar/power-menu.xml";
+	           menu-actions =  {
+		           shutdown = "shutdown";
+		           reboot = "reboot";
+		           suspend = "systemctl suspend";
+		           hibernate = "systemctl hibernate";
+	           };
+           };
+         }];
+       };
       
       programs = {
         bash = {
@@ -336,12 +499,11 @@ in
           disable-user-extensions = false;
           disabled-extensions = "window-list@gnome-shell-extensions.gcampax.github.com"; #"disabled";
           enabled-extensions = [
-            "appindicatorsupport@rgcjonas.gmail.com"
-            "just-perfection-desktop@just-perfection"
+            "appindicatorsupport@rgcjonas.gmail.com"            
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "rounded-window-corners@fxgn"
-            "thinkpad-battery-threshold@marcosdalvarez.org"
-            # "window-list@gnome-shell-extensions.gcampax.github.com"
+            "just-perfection-desktop@just-perfection"            
+            #"rounded-window-corners@fxgn"
+            "window-list@gnome-shell-extensions.gcampax.github.com"
           ];
           favorite-apps = [
             "firefox.desktop"

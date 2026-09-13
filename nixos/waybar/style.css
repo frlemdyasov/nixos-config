@@ -1,0 +1,104 @@
+@define-color text-color #241f31;
+@define-color bg-color #dadada;
+
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: Public Sans;
+  font-weight: bold;
+  font-size: 14px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @bg-color;
+  color: @text-color;
+}
+
+tooltip {
+ background: @bg-color;
+}
+
+tooltip label {
+    color: @text-color;
+    text-shadow: none;
+}
+
+#workspaces button {}
+
+#workspaces button.active {
+    background: #c0bfbc;
+    color: @text-color;
+}
+
+#workspaces button.focused {
+    background: #9a9996;
+    color: @text-color;
+}
+
+
+#workspaces button.urgent {}
+
+#workspaces button:hover {}
+
+#custom-language,
+#custom-updates,
+#custom-caffeine,
+#custom-weather,
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#workspaces,
+#tray,
+#backlight {}
+
+#tray {}
+
+#workspaces {}
+
+#custom-caffeine {}
+
+#custom-language {}
+
+#custom-updates {}
+
+#window {}
+
+#clock {}
+
+#network {}
+
+#pulseaudio {}
+
+#pulseaudio.microphone {}
+
+#battery.charging {
+    color: #26a269;
+}
+
+#custom-weather {}
+
+#custom-endright {}
+
+#cpu.critical {
+    color: #a51d2d;
+}
+
+#memory.critical {
+    color: #a51d2d;
+}
+
+menu {
+    background: @bg-color;
+}
+menuitem {
+    color: @text-color;
+}
+
+menuitem:hover {
+    background-color: #c0bfbc;
+}
+
