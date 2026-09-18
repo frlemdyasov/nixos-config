@@ -329,6 +329,8 @@ in
         wmenu                   # app launcher
         hyprshutdown            # shut down utility
         swaybg                  # wallpaper utility
+        grim                    # screenshot utility
+        slurp                   # screen region selector
       ];
 
        home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ"; 
